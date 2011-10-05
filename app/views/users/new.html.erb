@@ -1,0 +1,5 @@
+<h2><%= @current_user ? "New User" : "Sign Up Form" %></h2>
+
+<%= render 'form' %>
+
+<%= @current_user ? link_to('Back', users_path) : link_to('Back', '/') %>

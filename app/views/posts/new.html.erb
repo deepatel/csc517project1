@@ -1,0 +1,5 @@
+<h2>New <%= current_page?(:action => 'new_reply') ? "Reply" : "Question" %></h2>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', request.referrer %>

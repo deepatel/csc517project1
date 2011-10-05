@@ -1,0 +1,29 @@
+<%= form_for(@post) do |f| %>
+
+<%= f.hidden_field :user_id, :value => @current_user.id %>
+<% if ! @post.post_id.nil? %>
+<%= f.hidden_field :post_id, :value => @post.post_id %>
+<% elsif params.has_key?('post') %>
+<%= f.hidden_field :post_id, :value => params['post']['post_id'] %>
+<% end %>
+
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :data, current_page?(:action => 'new_reply') ? "Reply" : "Question" %><br />
+    <%= f.text_area :data %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+<h2>Edit post</h2>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @post %>
+<%if @current_user.is_admin %>
+| <%= link_to 'Post List', posts_path %>
+<% end %>
+

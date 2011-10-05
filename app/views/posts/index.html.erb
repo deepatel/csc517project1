@@ -1,0 +1,44 @@
+<h1>Listing posts</h1>
+
+<table>
+  <tr>
+    <td style="background-color:#fffacd;border:1px solid black;">&nbsp;&nbsp;&nbsp;</td>
+    <td> => Reply</td>
+  </tr>
+</table>
+
+<table class="list-display">
+  <tr>
+    <th>User</th>
+    <th>Data</th>
+    <th>Created</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @posts.each do |post| %>
+  <tr class="<%= post.replies.count == 0 ? "post-full-border" : "post-top-border" %>">
+    <td><%= post.user.name %></td>
+    <td><%= post.data.length > 50 ? "#{post.data[0..50]}..." : post.data %></td>
+    <td><%= post.created_at.localtime.to_formatted_s(:long) %></td>
+    <td><%= link_to 'Show', post %></td>
+    <td><%= link_to 'Edit', edit_post_path(post) %></td>
+    <td><%= link_to 'Destroy', post, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% post.replies.each do |reply| %>
+  <tr class="reply">
+    <td><%= reply.user.name %></td>
+    <td><%= reply.data.length > 50 ? "#{reply.data[0..50]}..." : reply.data %></td>
+    <td><%= reply.created_at.localtime.to_formatted_s(:long) %></td>
+    <td><%= link_to 'Show', reply %></td>
+    <td><%= link_to 'Edit', edit_post_path(reply) %></td>
+    <td><%= link_to 'Destroy', reply, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Post', new_post_path %>

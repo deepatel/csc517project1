@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @post.user.name %>
+</p>
+
+<p>
+  <b>Question:</b>
+  <%= @post.data %>
+</p>
+<% if @post.post_id != nil %>
+<p>
+  <b>Reply To:</b>
+  <%= link_to "Post ID #{@post.post.id}", post_path(@post.post) %>
+</p>
+<% end %>
+
+<%if @current_user and @current_user.is_admin %>
+   <%= link_to 'Edit', edit_post_path(@post) %> |
+   <%= link_to 'Post List', posts_path %>
+   <% if @post.user.id != @current_user.id %>
+         | <%= link_to 'Destroy', @user, :confirm => 'Are you sure? All associated votes will be deleted.', :method => :delete %>
+   <% end %>
+<% elsif @current_user.id == @post.user_id %>
+  <%= link_to 'Edit', edit_post_path(@post) %>
+
+<% end %>

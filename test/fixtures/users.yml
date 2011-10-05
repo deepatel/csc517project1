@@ -1,0 +1,33 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# The password used throughout this fixture is the encrypted version of 'tester'.
+
+mrmanrin:
+  username: mrmanrin
+  password: f0b2de5917a9c2fbbd987244339c995dbc8f0d6b
+  name: Michael Manring
+  email:
+  is_admin: true
+
+dapatel25:
+  username: dapatel25
+  password: f0b2de5917a9c2fbbd987244339c995dbc8f0d6b
+  name: Dhaval Patel
+  email:
+  is_admin: true
+
+tfgregor:
+  username: tfgregor
+  password: f0b2de5917a9c2fbbd987244339c995dbc8f0d6b
+  name: Tracy Gregory
+  email:
+  is_admin: true
+
+<% (1..10).each do |i| %>
+user<%= i %>:
+  username: user<%= i %>
+  password: f0b2de5917a9c2fbbd987244339c995dbc8f0d6b
+  name: User <%= i %>
+  email:
+  is_admin: false
+<% end %>

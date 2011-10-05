@@ -1,0 +1,67 @@
+<h2>User Details</h2>
+<p>
+  <b>Username:</b>
+  <%= @user.username %> </br>
+
+  <b>Name:</b>
+  <%= @user.name %>   </br>
+
+  <b>Email:</b>
+  <a href=mailto:<%= @user.email %>><%= @user.email %></a> </br>
+
+  <b>Is admin:</b>
+  <%= @user.is_admin %>  </br>
+</p>
+
+<h3>History</h3>
+
+<u><b>Posts</b></u></br>
+
+<% @posts = Post.where(:user_id => @user)%>
+
+<table>
+  <tr>
+    <th align=left>Question</th>
+    <th></th>
+    <th align=left>Date Created</th>
+  </tr>
+
+<% @posts.each do |post| %>
+  <tr valign="top">
+    <td><%= post.data %></td>
+    <td><font color="white"> abc </font>  </td>
+    <td><%= post.created_at.localtime.to_date.to_formatted_s(:long) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<u><b>Votes</b></u></br>
+
+<% @votes = Vote.where(:user_id => @user)%>
+
+<table>
+  <tr>
+    <th align=left>Question</th>
+    <th></th>
+    <th align=left>Date Voted</th>
+  </tr>
+
+<% @votes.each do |vote| %>
+  <% post = Post.find(vote.post_id) %>
+  <tr valign="top">
+    <td><%= post.data %></td>
+    <td><font color="white"> abc </font>  </td>
+    <td><%= vote.created_at.localtime.to_date.to_formatted_s(:long) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+
+
+<%= link_to 'User Summary', "/reports" %>
+
+

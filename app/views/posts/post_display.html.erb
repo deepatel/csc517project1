@@ -1,0 +1,64 @@
+
+<% current_date = Time.new.localtime.to_date() %>
+<% votes_today = Array.new %>
+<% @posts.each do |post| %>
+    <% if (post.created_at.localtime.to_date()== current_date)  then  %>
+        <% votes_today << post.votes.size.to_i %>
+    <%end%>
+<%end%>
+<% max_today = votes_today.max %>
+
+<!--Calculate display order metric-->
+<% @posts.each do |post| %>
+      <% post.score_me(max_today) %>
+<%end%>
+
+
+<% @posts.sort! {|p1, p2| p2.created_at <=> p1.created_at} %>
+<% @posts.sort_by! { |post| [post.created_at.localtime.to_date, post.score_total, post.created_at.localtime] }  %>
+<% @posts.reverse! %>
+
+
+<% prevdate = nil %>
+
+<% @posts.each do |post| %>
+    <% if (post.created_at.localtime.to_date() != prevdate)  then %>
+        <h3><%= post.created_at.localtime.to_date.to_formatted_s(:long) %></h3>
+    <%end%>
+
+    <table class="post-table">
+      <tr>
+        <td class="vote-count-td">
+          <span><%= pluralize post.votes.size, 'vote' %></span>
+<% if @current_user and @current_user.id != post.user.id and ! post.votes.has_voted?(@current_user.id) %>
+          <button onclick="$('vote_post_id').value = <%= post.id %>; $('new_vote').submit();">VOTE!!!</button>
+<% end %>
+        </td>
+        <td class="post-details-td">
+          <b><%= post.user.name %>:</b> <%= post.data %><br />
+<% post.replies.each do |reply| %>
+<% if @current_user and @current_user.id != reply.user.id and ! reply.votes.has_voted?(@current_user.id) %>
+          <button onclick="$('vote_post_id').value = <%= reply.id %>; $('new_vote').submit();">Vote!!!</button>
+<% end %>
+          <b class="reply"><%= reply.user.name %> (<%= reply.votes.size %>):</b> <%= reply.data %><br />
+<% end %>
+          <span class="post-details-time" style="float: right;">
+            <%= post.created_at.localtime.to_formatted_s(:long) %> <button onclick="$('post_post_id').value = <%= post.id %>; $('new_reply').submit();">Reply</button>
+          </span>
+        </td>
+      </tr>
+    </table>
+<% prevdate = post.created_at.localtime.to_date() %>
+<% end %>
+
+<% if @current_user %>
+<%= form_tag '/posts/new_reply', :id => 'new_reply' do %>
+<%= hidden_field :post, :post_id %>
+<% end %>
+
+
+<%= form_for(Vote.new) do |f| %>
+<%= f.hidden_field :user_id, :value => @current_user.id %>
+<%= f.hidden_field :post_id %>
+<% end %>
+<% end %>

@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Username:</b>
+  <%= @user.username %>
+</p>
+
+<!--<p>
+  <b>Password:</b>
+  <%= @user.password %>
+</p>-->
+
+<p>
+  <b>Name:</b>
+  <%= @user.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <a href=mailto:<%= @user.email %>><%= @user.email %></a>
+</p>
+
+<p>
+  <b>Is admin:</b>
+  <%= @user.is_admin %>
+</p>
+
+<% if !@current_user %>
+  <form method="get" action="/login"><button>Login</button></form>
+<%elsif @current_user and @current_user.is_admin %>
+   <%= link_to 'Edit', edit_user_path(@user) %> |
+   <% if @user.id != @current_user.id %>
+        <%= link_to 'Destroy', @user, :confirm => 'Are you sure? All associated posts and votes will be deleted.', :method => :delete %> |
+   <% end %>
+   <%= link_to 'User List', users_path %>
+
+<% end %>

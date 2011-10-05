@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Question</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+
+<div id="maincontainer">
+
+    <div id="topsection">
+      <div id="topheader">
+        <h1>Live Questions</h1>
+        <span id="logindata">
+<% if @current_user %>
+          <form method="get" action="/logout"><%= @current_user.name %> | <%= link_to 'My Account', edit_user_path(@current_user) %>   <button>Logout</button></form>
+<% else %>
+          <form method="get" action="/login"><button>Login</button></form>
+<% end %>
+        </span>
+      </div>
+      <div id="searchheader">
+        <form method="post" action="/posts/search">
+        <table>
+          <tr>
+            <td>Search for Posts: <input type="text" name="searchquery" size="50" value="<%= params[:searchquery] %>" /></td>
+            <td>
+              <input type="radio" name="searchtype" value="user" <%= "checked " if params[:searchtype] == "user" %>/> User<br />
+              <input type="radio" name="searchtype" value="content" <%= "checked " if params[:searchtype] == "content" %>/> Content
+            </td>
+            <td><button>Search...</button></td>
+          </tr>
+        </table>
+        </form>
+      </div>
+
+    </div>
+
+    <div id="contentwrapper"><div id="contentcolumn"><div class="innertube">
+
+<%= yield %>
+
+    </div></div></div>
+
+    <div id="leftcolumn">
+
+<%= render 'shared/navigation' %>
+
+    </div>
+
+    <div id="footer"></div>
+
+</div>
+
+</body>
+</html>

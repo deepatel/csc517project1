@@ -1,0 +1,35 @@
+<h2>User List</h2>
+
+<table class="list-display">
+  <tr>
+    <th width=100 align=left>Username</th>
+    <!--<th width=100 align=left>Password</th>-->
+    <th width=200 align=left>Name</th>
+    <th width=200 align=left>Email</th>
+    <th>Admin</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @users.sort! {|u1, u2| u1.name <=> u2.name} %>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.username %></td>
+    <!--<td><%= user.password %></td>-->
+    <td><%= user.name %></td>
+    <td><a href=mailto:<%= user.email %>><%= user.email %></a></td>
+    <td><%= user.is_admin %></td>
+    <td><%= link_to 'Show', user %></td>
+    <td><%= link_to 'Edit', edit_user_path(user) %></td>
+    <% if user.id != @current_user.id %>
+        <td><%= link_to 'Destroy', user, :confirm => 'Are you sure? All associated posts and votes will be deleted.', :method => :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New User', new_user_path %>

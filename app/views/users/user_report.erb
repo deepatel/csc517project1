@@ -1,0 +1,36 @@
+<h2>User Report</h2>
+
+<table>
+  <tr>
+    <th width=120 align=left>Username</th>
+    <th width=200 align=left>Name</th>
+    <th width=100 align=left>Posts</th>
+    <th width=100 align=left>Replies</th>
+    <th width=100 align=left>Votes</th>
+  </tr>
+
+<% @users.sort! {|u1, u2| u1.name <=> u2.name} %>
+
+<% @users.each do |user| %>
+
+
+   <% num_replies=0 %>
+
+
+   <% num_votes = Vote.where(:user_id => user).count %>
+   <% num_posts = Post.where(:user_id => user).count %>
+
+
+  <tr>
+    <td><%= user.username %></td>
+    <td><%= user.name %></td>
+    <td><%= num_posts %></td>
+    <td><%= num_replies %></td>
+    <td><%= num_votes %></td>
+    <td><%= link_to 'Details', details_user_path(user) %></td>
+
+  </tr>
+<% end %>
+</table>
+
+<br />

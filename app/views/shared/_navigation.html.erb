@@ -1,0 +1,26 @@
+    <form method="get" action="/">
+      <button class="navbutton">Top Current Posts</button>
+    </form>
+    <form method="get" action="/posts/all">
+      <button class="navbutton">All Posts</button>
+    </form>
+<% if @current_user %>
+    <form method="get" action="/posts/new">
+      <button class="navbutton">Create Post</button>
+    </form>
+<%   if @current_user.is_admin %>
+    <form method="get" action="/users">
+      <button class="navbutton">Manage Accounts</button>
+    </form>
+    <form method="get" action="/posts">
+      <button class="navbutton">Manage Posts</button>
+    </form>
+    <form method="get" action="/reports">
+      <button class="navbutton">Reports</button>
+    </form>
+<%   end %>
+<% else %>
+    <form method="get" action="/users/new">
+      <button class="navbutton">Create Account</button>
+    </form>
+<% end %>
